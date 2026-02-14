@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>💝 Для Гули</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #ffc2d1;
+            --accent: #ff1744;
+            --dark: #2d1b2e;
+            --light: #fff5f7;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 25px;
+            animation: float 12s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px 30px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            
+            .container {
+                padding: 30px 20px;
+                border-radius: 20px;
+                max-height: 95vh;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .screen {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 900;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        .welcome-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-text {
+                font-size: 1.15rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        .agreement {
+            background: var(--light);
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .agreement {
+                padding: 15px;
+                margin: 20px 0;
+            }
+        }
+
+        .agreement-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .agreement-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .agreement-title {
+                font-size: 1.1rem;
+            }
+            
+            .agreement-text {
+                font-size: 0.95rem;
+            }
+        }
+
+        .agreement-text ul {
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+
+        .agreement-text li {
+            margin: 8px 0;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-container:hover {
+            background: var(--light);
+        }
+
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox.checked {
+            background: var(--accent);
+        }
+
+        .checkbox-label {
+            font-size: 1.1rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .checkbox {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .checkbox-label {
+                font-size: 1rem;
+            }
+        }
+
+        .warning-message {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            color: #856404;
+            font-size: 1rem;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        .warning-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .question-text {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: linear-gradient(135deg, var(--secondary), var(--light));
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            color: var(--dark);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .option {
+                padding: 12px 18px;
+                font-size: 1.05rem;
+            }
+        }
+
+        .option:hover, .option:active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 23, 68, 0.3);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-color: var(--accent);
+            color: white;
+            transform: scale(1.03);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 35px;
+            font-size: 1.25rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 23, 68, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .btn {
+                padding: 14px 30px;
+                font-size: 1.15rem;
+            }
+        }
+
+        .btn:hover, .btn:active {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 23, 68, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .error-message {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+
+        .long-text {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            color: var(--dark);
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .long-text {
+                font-size: 1.15rem;
+                line-height: 1.75;
+                margin: 20px 0;
+            }
+        }
+
+        .long-text p {
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealText 1s ease forwards;
+        }
+
+        @media (max-width: 768px) {
+            .long-text p {
+                margin-bottom: 15px;
+            }
+        }
+
+        @keyframes revealText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .long-text p:nth-child(1) { animation-delay: 0.2s; }
+        .long-text p:nth-child(2) { animation-delay: 0.5s; }
+        .long-text p:nth-child(3) { animation-delay: 0.8s; }
+        .long-text p:nth-child(4) { animation-delay: 1.1s; }
+        .long-text p:nth-child(5) { animation-delay: 1.4s; }
+        .long-text p:nth-child(6) { animation-delay: 1.7s; }
+        .long-text p:nth-child(7) { animation-delay: 2s; }
+        .long-text p:nth-child(8) { animation-delay: 2.3s; }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border: 3px solid #ff9800;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e65100;
+        }
+
+        @media (max-width: 768px) {
+            .warning-box {
+                padding: 15px;
+                font-size: 1.1rem;
+                margin: 20px 0;
+            }
+        }
+
+        .emoji-big {
+            font-size: 4rem;
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .emoji-big {
+                font-size: 3rem;
+                margin: 15px 0;
+            }
+        }
+
+        .final-screen {
+            text-align: center;
+        }
+
+        .final-screen h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .final-screen h2 {
+                font-size: 2.2rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        .final-text {
+            font-size: 1.35rem;
+            line-height: 1.85;
+            color: var(--dark);
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .final-text {
+                font-size: 1.2rem;
+                line-height: 1.7;
+            }
+        }
+
+        /* Scrollbar styling */
+        .container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcomeScreen">
+            <h1>💝 Добрый вечер, мадам</h1>
+            <p class="welcome-text">
+                Приглашаю вас на мини опросник что разукрасит твой день пупс. Надеюсь тебе понравится :)
+            </p>
+
+            <div class="agreement">
+                <div class="agreement-title">📜 Условия соглашения</div>
+                <div class="agreement-text">
+                    Продолжая, ты обещаешь:
+                    <ul>
+                        <li>Высыпаться и заботиться о себе</li>
+                        <li>Принимать помощь, которую я тебе предоставляю</li>
+                        <li>Получать удовольствие от нашего общения</li>
+                        <li>Делиться темами, что гложат, и быть открытой</li>
+                        <li>Быть счастливой и прорываться вместе сквозь проблемы и различные ситуации</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="checkbox-container" id="agreementCheckbox">
+                <div class="checkbox" id="checkbox">
+                    <span style="color: white; font-size: 1.3rem; display: none;" id="checkmark">✓</span>
+                </div>
+                <div class="checkbox-label">Я согласна с условиями</div>
+            </div>
+
+            <div class="warning-message" id="warningMessage">
+                ⚠️ Рекомендуем ознакомиться с условиями соглашения!
+            </div>
+
+            <button class="btn" id="startBtn" disabled>Начать</button>
+        </div>
+
+        <!-- Quiz Screens -->
+        <div class="screen" id="quizScreen">
+            <div id="quizContent"></div>
+        </div>
+
+        <!-- Long Text Screens -->
+        <div class="screen" id="textScreen1">
+            <div class="warning-box">
+                ⚠️ Предупреждение: В дальнейших страницах скорее всего будет уйма слащавого текста. Имейте ввиду данную информацию.
+            </div>
+
+            <div class="long-text">
+                <p>Гуля, не знаю кем считаешь себя ты, но раз выпал шанс, скажу тебе кем считаю тебя я.</p>
+                
+                <p>Когда я ещё не знал тебя толком, я предполагал какая ты в целом по характеру, но почему-то особо не попал. Ты прекрасная, интересная и приятная девушка.</p>
+                
+                <p>Сложно найти аналоги, что помогут мне описать как мне приятно проводить с тобой время, общаться, гулять, учиться, смотреть что-то вместе. Хуесосить других в конце концов!</p>
+                
+                <p>Ты необычайная и, смотря на тебя каждый раз, что-то происходит. Сложно перечислить за раз, но очень сложно оторвать глаза от такой яркой звёздочки, что одним лишь присутствием всё меняет.</p>
+                
+                <p>Думаю соответствующим словом будет <strong>Муза</strong>. Ты моя Муза пупс, и поверь, любой художник или писатель локти до крови бы искусал от зависти, если была возможность осознать как мне повезло.</p>
+                
+                <p>Не знаю кем считаешь меня ты, но могу сказать про себя, что я очень ценю тебя.</p>
+                
+                <p>Так что будь собой дальше :) и лишь набирай обороты в своей красоте</p>
+            </div>
+
+            <button class="btn" onclick="nextScreen('textScreen2')">Далее</button>
+        </div>
+
+        <div class="screen" id="textScreen2">
+            <div class="long-text">
+                <p>Если говорить обо мне, то я довольно зажатый человек. Но это даже в плюс, ведь ты буквально первая кто слышит от меня подобное.</p>
+                
+                <p>Валентинку до я никому не делал, признаваться, говорить свои мысли — многое из подобных вещей мне даются сложно и в целом новинка мне.</p>
+                
+                <p>Но я хочу проявлять свои чувства и эмоции. Обычно я не говорю слова, что "не следует говорить", ведь людям кажется что ты хвастаешься, обманываешь или подсасываешься. Путают обычную искренность с какими-то ебланскими понятиями.</p>
+                
+                <p>Я стараюсь быть всегда честным и говорю то, во что искренне верю. И хочу, чтобы ты понимала, что всё это я говорю потому что так считаю.</p>
+                
+                <p>Я меняюсь в последнее время и хочу побольше откровенности, ибо от того что ты типо крутой счастливее не станешь, а быть честным с той кто тебе дорог — вполне может быть.</p>
+                
+                <p>Мне не нужен какой-то особенный день, чтобы всё это сказать, но решил воспользоваться шансом.</p>
+            </div>
+
+            <button class="btn" onclick="continueQuiz()">Продолжить</button>
+        </div>
+
+        <div class="screen" id="textScreen3">
+            <div class="long-text">
+                <p>Ты очень мило выглядишь когда спишь, ты очень мило выглядишь когда шутишь, смеёшься, спишь. Опять же, мне очень сложно отводить глаза от тебя.</p>
+                
+                <p>Мне очень нравится проводить время с тобой, гулять, ебланить, быть.</p>
+                
+                <p>Ты говорила, что ты не любишь спорить, но с некоторыми можно, говорила что я упрямый козёл, что не умею признавать что не прав :)</p>
+                
+                <p>Так давай спорить дальше о любой хуйне что можно.</p>
+                
+                <p>Опять же, не говорю за тебя, и даже если ты и вправду меня ненавидишь, то я к тебе испытываю самые тёплые чувства.</p>
+                
+                <p>Наверное, если бы мне предложили после реинкарнации так же встретить тебя и так же быть рядом, я бы не отказался.</p>
+                
+                <p>Помни, что мне важно чтобы ты была счастлива, и если хотя бы как-то я могу в этом посодействовать — можешь лишь обратиться.</p>
+            </div>
+
+            <button class="btn" onclick="nextScreen('finalQuizScreen')">Далее</button>
+        </div>
+
+        <!-- Final Quiz Question -->
+        <div class="screen" id="finalQuizScreen">
+            <h1>Последний вопрос</h1>
+            <div class="question">
+                <div class="question-text">Мы прорвёмся?</div>
+                <div class="options">
+                    <div class="option" onclick="selectFinalOption(this, true)">Да</div>
+                    <div class="option" onclick="selectFinalOption(this, true)">Конечно</div>
+                    <div class="option" onclick="selectFinalOption(this, true)">當然</div>
+                    <div class="option" onclick="selectFinalOption(this, true)">Certainly</div>
+                    <div class="option" onclick="selectFinalOption(this, false)">Нет</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bad Ending -->
+        <div class="screen" id="badEndingScreen">
+            <span class="emoji-big">😢</span>
+            <h1>Конец</h1>
+            <div class="final-text">
+                <p>:(</p>
+            </div>
+        </div>
+
+        <!-- Final Screen -->
+        <div class="screen" id="finalScreen">
+            <div class="final-screen">
+                <span class="emoji-big">💝✨</span>
+                <h2>До встречи!</h2>
+                <div class="final-text">
+                    <p>Я уже утомил тебя небось этим всем. Но вот итог того что я не договаривал.</p>
+                    
+                    <p>Желаю тебе всего наилучшего и чтобы один день был краше другого. Спасибо тебе за то что ты есть и за то что ты есть рядом :)</p>
+                    
+                    <p>Это всё сделано очень на скорую руку, но в следующий раз всё будет шикарнее. Захочешь ещё в такие игры поиграть — я всегда рад пупс :)</p>
+                    
+                    <p><strong>Посмотрим куда дальше будет идти тропа (К богу!)</strong></p>
+                </div>
+                <span class="emoji-big">🥰💕</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data with logic
+        const quizData = [
+            {
+                question: "Кто ты? (отметь самые верные)",
+                options: [
+                    { text: "Я рыба ёж", correct: true },
+                    { text: "Я самая необычайная, смышлённая, милая и красивая девушка", correct: true },
+                    { text: "Я расистка", correct: true },
+                    { text: "Я импостер", correct: true },
+                    { text: "Я Бестыжая/Гуманитарий/Фронтендер", correct: false }
+                ],
+                multiSelect: true,
+                wrongAttempts: 0,
+                errorMessages: [
+                    "Подумай лучше, ты ошиблась где-то",
+                    "Тут что-то лишнее",
+                    "Я начинаю верить про гуманитаризм"
+                ]
+            },
+            {
+                question: "Кто НЕ крутой",
+                options: [
+                    { text: "Мексиканцы", correct: false },
+                    { text: "Нег... Афро америк...", correct: true },
+                    { text: "Евреи", correct: true },
+                    { text: "Таджики☝️☝️", correct: true },
+                    { text: "Казахи", correct: false }
+                ],
+                multiSelect: true
+            },
+            {
+                question: "Какие из этих цветов тебе нравятся",
+                options: [
+                    { text: "Белый", correct: true, required: true },
+                    { text: "Фиолетовый", correct: true, required: true },
+                    { text: "Красный", correct: false },
+                    { text: "Синий", correct: false },
+                    { text: "Оранжевый", correct: false },
+                    { text: "Зелёный", correct: false },
+                    { text: "Голубой", correct: false },
+                    { text: "Жёлтый", correct: false }
+                ],
+                multiSelect: true,
+                customError: "А про эти не знал"
+            },
+            {
+                question: "Какая игра бьяка?",
+                options: [
+                    { text: "Карты", correct: false },
+                    { text: "Монополия", correct: false },
+                    { text: "Уно", correct: true },
+                    { text: "Верю не верю", correct: false },
+                    { text: "Скайрим", correct: false, special: "....очень обидно" },
+                    { text: "Dota 2", correct: false },
+                    { text: "Мафия", correct: false }
+                ]
+            },
+            {
+                question: "Какие лучшие персонажи?",
+                options: [
+                    { text: "Уолтер Вайт", correct: true },
+                    { text: "Дедпул", correct: true },
+                    { text: "Альтушка", correct: true },
+                    { text: "Скай (не кот)", correct: false },
+                    { text: "Второй химик Уолтера", correct: false },
+                    { text: "Супермен", correct: false },
+                    { text: "Тони Старк", correct: true },
+                    { text: "Бэтмен", correct: true }
+                ],
+                multiSelect: true
+            },
+            {
+                question: "Какая страна давать кошка жена и миска риса всем хорошим гражданам?",
+                options: [
+                    { text: "Беларусь 🥔", correct: false },
+                    { text: "Казахстан", correct: false },
+                    { text: "Россия", correct: false },
+                    { text: "Великий Китай", correct: true }
+                ]
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let selectedOptions = [];
+        let isAgreed = false;
+
+        // Initialize
+        function init() {
+            createHearts();
+            setupAgreement();
+        }
+
+        // Create floating hearts
+        function createHearts() {
+            const heartsBg = document.getElementById('heartsBg');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = '💖';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.animationDuration = (10 + Math.random() * 10) + 's';
+                heartsBg.appendChild(heart);
+            }
+        }
+
+        // Setup agreement checkbox
+        function setupAgreement() {
+            const checkboxContainer = document.getElementById('agreementCheckbox');
+            const checkbox = document.getElementById('checkbox');
+            const checkmark = document.getElementById('checkmark');
+            const warningMessage = document.getElementById('warningMessage');
+            const startBtn = document.getElementById('startBtn');
+
+            checkboxContainer.addEventListener('click', function() {
+                isAgreed = !isAgreed;
+                
+                if (isAgreed) {
+                    checkbox.classList.add('checked');
+                    checkmark.style.display = 'block';
+                    warningMessage.classList.add('show');
+                    startBtn.disabled = false;
+                } else {
+                    checkbox.classList.remove('checked');
+                    checkmark.style.display = 'none';
+                    warningMessage.classList.remove('show');
+                    startBtn.disabled = true;
+                }
+            });
+
+            startBtn.addEventListener('click', function() {
+                if (isAgreed) {
+                    showScreen('quizScreen');
+                    loadQuiz();
+                }
+            });
+        }
+
+        // Load quiz question
+        function loadQuiz() {
+            if (currentQuizIndex >= quizData.length) {
+                showScreen('textScreen1');
+                return;
+            }
+
+            const quiz = quizData[currentQuizIndex];
+            selectedOptions = [];
+
+            let html = '<h1>Вопрос ' + (currentQuizIndex + 1) + '</h1>';
+            html += '<div class="question">';
+            html += '<div class="question-text">' + quiz.question + '</div>';
+            html += '<div class="options">';
+            
+            quiz.options.forEach((option, index) => {
+                html += '<div class="option" onclick="selectOption(this, ' + index + ')">' + option.text + '</div>';
+            });
+            
+            html += '</div>';
+            html += '<div class="error-message" id="errorMessage"></div>';
+            html += '<button class="btn" onclick="checkAnswer()">Ответить</button>';
+            html += '</div>';
+
+            document.getElementById('quizContent').innerHTML = html;
+        }
+
+        // Select option
+        function selectOption(element, index) {
+            const quiz = quizData[currentQuizIndex];
+            
+            if (quiz.multiSelect) {
+                element.classList.toggle('selected');
+                const optionIndex = selectedOptions.indexOf(index);
+                if (optionIndex > -1) {
+                    selectedOptions.splice(optionIndex, 1);
+                } else {
+                    selectedOptions.push(index);
+                }
+            } else {
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+                selectedOptions = [index];
+            }
+        }
+
+        // Check answer
+        function checkAnswer() {
+            const quiz = quizData[currentQuizIndex];
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.classList.remove('show');
+
+            if (selectedOptions.length === 0) {
+                errorMessage.textContent = "Выбери хотя бы один вариант!";
+                errorMessage.classList.add('show');
+                return;
+            }
+
+            // Check for special Skyrim answer
+            if (currentQuizIndex === 3) { // Game question
+                const skyrimOption = quiz.options.findIndex(opt => opt.text === "Скайрим");
+                if (selectedOptions.includes(skyrimOption)) {
+                    errorMessage.textContent = quiz.options[skyrimOption].special;
+                    errorMessage.classList.add('show');
+                    return;
+                }
+            }
+
+            // Check if answer is correct
+            let isCorrect = true;
+
+            if (quiz.multiSelect) {
+                // Check for wrong selections first
+                for (let i = 0; i < selectedOptions.length; i++) {
+                    const option = quiz.options[selectedOptions[i]];
+                    if (!option.correct) {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+
+                // Check if required options are selected (for color question)
+                if (quiz.customError) {
+                    const hasWhite = selectedOptions.some(i => quiz.options[i].text === "Белый");
+                    const hasPurple = selectedOptions.some(i => quiz.options[i].text === "Фиолетовый");
+                    
+                    if (!hasWhite || !hasPurple) {
+                        errorMessage.textContent = "Не хватает обязательных цветов!";
+                        errorMessage.classList.add('show');
+                        return;
+                    }
+
+                    // Check for non-required colors
+                    const hasOthers = selectedOptions.some(i => 
+                        quiz.options[i].text !== "Белый" && quiz.options[i].text !== "Фиолетовый"
+                    );
+
+                    if (hasOthers) {
+                        errorMessage.textContent = quiz.customError;
+                        errorMessage.classList.add('show');
+                        return;
+                    }
+                }
+            } else {
+                isCorrect = quiz.options[selectedOptions[0]].correct;
+            }
+
+            // Handle first question special logic
+            if (currentQuizIndex === 0) {
+                const wrongOption = selectedOptions.find(i => !quiz.options[i].correct);
+                if (wrongOption !== undefined) {
+                    if (!quiz.wrongAttempts) quiz.wrongAttempts = 0;
+                    errorMessage.textContent = quiz.errorMessages[quiz.wrongAttempts];
+                    errorMessage.classList.add('show');
+                    quiz.wrongAttempts++;
+                    return;
+                }
+            }
+
+            if (!isCorrect) {
+                errorMessage.textContent = "Не совсем правильно, попробуй ещё раз!";
+                errorMessage.classList.add('show');
+                return;
+            }
+
+            // Move to next question
+            currentQuizIndex++;
+            loadQuiz();
+        }
+
+        // Continue quiz after text screen
+        function continueQuiz() {
+            showScreen('textScreen3');
+        }
+
+        // Final question handler
+        function selectFinalOption(element, isPositive) {
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            setTimeout(() => {
+                if (isPositive) {
+                    showScreen('finalScreen');
+                } else {
+                    showScreen('badEndingScreen');
+                }
+            }, 500);
+        }
+
+        // Show screen
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            
+            // Scroll to top
+            document.querySelector('.container').scrollTop = 0;
+        }
+
+        // Next screen
+        function nextScreen(screenId) {
+            showScreen(screenId);
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
